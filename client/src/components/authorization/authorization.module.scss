@@ -1,0 +1,33 @@
+@import "../../utils/variables.scss";
+
+.authorization {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
+    align-items: center;
+    margin: 150px auto 0 auto;
+
+    &_header {
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    input {
+        margin: 10px 20px;
+    }
+
+    &_btn {
+        border: none;
+        background-color: $font-color;
+        border-radius: 8px;
+        color: white;
+        font-weight: 700;
+        padding: 5px 10px;
+        align-self: flex-end;
+        margin-top: 10px;
+    }
+}

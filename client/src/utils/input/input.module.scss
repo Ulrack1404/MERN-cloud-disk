@@ -1,0 +1,17 @@
+@import "../variables.scss";
+
+input {
+    border: none;
+    border-bottom: $font-color solid 3px;
+    background: transparent;
+    width: 100%;
+    padding: 3px;
+    &:focus {
+        outline: none;
+        // transform: scale(1.02);
+        background-color: rgb(205, 205, 205);
+    }
+
+    color: $font-color;
+    font-weight: 700;
+}

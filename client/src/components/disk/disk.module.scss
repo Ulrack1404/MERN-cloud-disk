@@ -1,0 +1,23 @@
+@import "../../utils/variables.scss";
+
+.disk {
+    margin-top: 20px;
+    width: 100%;
+}
+.btns {
+    display: flex;
+}
+.back {
+}
+.create {
+    margin-left: 10px;
+}
+.input {
+    display: none;
+}
+.label {
+    border: 2px dashed $font-color;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}

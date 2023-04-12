@@ -1,0 +1,33 @@
+@import "../../utils/variables.scss";
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: white;
+    width: 100%;
+
+    &_header {
+        margin-left: 10px;
+        font-size: 24px;
+        font-weight: 700;
+    }
+    &_login {
+        margin-left: auto;
+        margin-right: 20px;
+    }
+
+    &_registration {
+        // margin-left: auto;
+    }
+    &_exit {
+        margin-left: auto;
+    }
+}
+
+.container {
+    width: $width-container;
+    display: flex;
+    align-items: center;
+}
