@@ -3,7 +3,7 @@ module.exports = {
         browser: true,
         es2021: true
     },
-    extends: ["plugin:react/recommended", "standard"],
+    extends: ["plugin:react/recommended"],
     overrides: [],
     parserOptions: {
         ecmaVersion: "latest",
@@ -34,6 +34,7 @@ module.exports = {
             {
                 ignoreRestSiblings: true
             }
-        ] // игнорировать объявленные, но не используемые переменные
+        ], // игнорировать объявленные, но не используемые переменные
+        "react/prop-types": 0
     }
 };

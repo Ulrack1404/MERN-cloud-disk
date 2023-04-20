@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createDir, getFiles, uploadFile } from "../../actions/file";
 import { setCurrentDir, setPopupDidplay } from "../../reducers/fileReducer";
@@ -10,6 +10,7 @@ const Disk = () => {
     const dispatch = useDispatch();
     const currentDir = useSelector((state) => state.files.currentDir);
     const dirStack = useSelector((state) => state.files.dirStack);
+    const [dragEnter, setDragEnter] = useState(false);
     useEffect(() => {
         dispatch(getFiles(currentDir));
     }, [currentDir]);
@@ -26,9 +27,33 @@ const Disk = () => {
         const files = [...event.target.files];
         files.forEach((file) => dispatch(uploadFile(file, currentDir)));
     }
+    function dragEnterHandler(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        setDragEnter(true);
+        console.log("event:", event);
+    }
 
-    return (
-        <div className={styles.disk}>
+    function dragLeaveHandler(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        setDragEnter(false);
+    }
+    function dropHandler(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        let files = [...event.dataTransfer.files];
+        files.forEach((file) => dispatch(uploadFile(file, currentDir)));
+        setDragEnter(false);
+    }
+
+    return !dragEnter ? (
+        <div
+            className={styles.disk}
+            onDragEnter={dragEnterHandler}
+            onDragLeave={dragLeaveHandler}
+            onDragOver={dragEnterHandler}
+        >
             <div className={styles.btns}>
                 <button
                     className={styles.back}
@@ -51,7 +76,7 @@ const Disk = () => {
                     </label>
                     <input
                         multiple={true}
-                        onChange={() => fileUploadHandler(event)}
+                        onChange={(event) => fileUploadHandler(event)}
                         type="file"
                         id="disk__upload-input"
                         className={styles.input}
@@ -60,6 +85,16 @@ const Disk = () => {
             </div>
             <FileList />
             <PopUp />
+        </div>
+    ) : (
+        <div
+            className={styles.dropArea}
+            onDragEnter={dragEnterHandler}
+            onDragLeave={dragLeaveHandler}
+            onDragOver={dragEnterHandler}
+            onDrop={dropHandler}
+        >
+            Перетащите файлы сюда
         </div>
     );
 };

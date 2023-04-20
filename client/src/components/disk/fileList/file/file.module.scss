@@ -27,3 +27,23 @@
     grid-column-start: 6;
     justify-self: center;
 }
+.btn{
+    display: none;
+}
+.delete{
+    // background-color: darkkhaki;
+}
+.file:hover .date{
+    grid-column-start: 3;
+}
+.file:hover .size{
+    grid-column-start: 4;
+}
+.file:hover .download{
+    grid-column-start: 5;
+    display: block;
+}
+.file:hover .delete{
+    grid-column-start: 6;
+    display: block;
+}
