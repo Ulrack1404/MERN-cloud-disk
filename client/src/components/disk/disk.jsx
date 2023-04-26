@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createDir, getFiles, uploadFile } from "../../actions/file";
-import { setCurrentDir, setPopupDidplay } from "../../reducers/fileReducer";
+import { setCurrentDir, setPopupDisplay } from "../../reducers/fileReducer";
 import styles from "./disk.module.scss";
 import FileList from "./fileList/fileList";
 import PopUp from "./popUp/popUp";
+import Uploader from "./uploader/Uploader";
 
 const Disk = () => {
     const dispatch = useDispatch();
     const currentDir = useSelector((state) => state.files.currentDir);
     const dirStack = useSelector((state) => state.files.dirStack);
     const [dragEnter, setDragEnter] = useState(false);
+    const [sort, setSort] = useState("type");
+
     useEffect(() => {
-        dispatch(getFiles(currentDir));
-    }, [currentDir]);
+        dispatch(getFiles(currentDir, sort));
+        console.log("sort:", sort);
+    }, [currentDir, sort]);
 
     function showPopupHandler() {
-        dispatch(setPopupDidplay("flex"));
+        dispatch(setPopupDisplay("flex"));
     }
     function backClickHandler() {
         const backDirId = dirStack.pop();
@@ -82,9 +86,20 @@ const Disk = () => {
                         className={styles.input}
                     />
                 </div>
+                <select
+                    value={sort}
+                    onChange={(e) => setSort(e.target.value)}
+                    className={styles.select}
+                    id=""
+                >
+                    <option value="name">По имени</option>
+                    <option value="type">По типу</option>
+                    <option value="date">По дате</option>
+                </select>
             </div>
             <FileList />
             <PopUp />
+            <Uploader />
         </div>
     ) : (
         <div

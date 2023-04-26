@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createDir } from "../../../actions/file";
-import { setPopupDidplay } from "../../../reducers/fileReducer";
+import { setPopupDisplay } from "../../../reducers/fileReducer";
 import Input from "../../../utils/input/input";
 import styles from "./popUp.module.scss";
 
@@ -14,13 +14,13 @@ const PopUp = () => {
     function createHandler() {
         dispatch(createDir(currentDir, dirName));
         setDirName("");
-        dispatch(setPopupDidplay("none"));
+        dispatch(setPopupDisplay("none"));
     }
 
     return (
         <div
             className={styles.popup}
-            onClick={() => dispatch(setPopupDidplay("none"))}
+            onClick={() => dispatch(setPopupDisplay("none"))}
             style={{ display: popupDisplay }}
         >
             <div
@@ -31,7 +31,7 @@ const PopUp = () => {
                     <div className={styles.title}>Создать новую папку</div>
                     <button
                         className={styles.btn}
-                        onClick={() => dispatch(setPopupDidplay("none"))}
+                        onClick={() => dispatch(setPopupDisplay("none"))}
                     >
                         &times;
                     </button>

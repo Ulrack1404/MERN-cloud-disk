@@ -4,7 +4,8 @@ import dirLogo from "../../../../assets/img/dir.svg";
 import fileLogo from "../../../../assets/img/file.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { pushToStack, setCurrentDir } from "../../../../reducers/fileReducer";
-import { downloadFile } from "../../../../actions/file";
+import { deleteFile, downloadFile } from "../../../../actions/file";
+import sizeFormat from "../../../../utils/sizeFormat";
 
 const File = ({ file }) => {
     const { _id, name, date, size, type, path } = file;
@@ -21,9 +22,16 @@ const File = ({ file }) => {
         e.stopPropagation();
         downloadFile(file);
     }
+    function deleteClickHandler(e) {
+        e.stopPropagation();
+        dispatch(deleteFile(file));
+    }
 
     return (
-        <div className={styles.file} onClick={() => openDirHandler(file)}>
+        <div
+            className={`${styles.file} file`}
+            onDoubleClick={() => openDirHandler(file)}
+        >
             <img
                 src={type === "dir" ? dirLogo : fileLogo}
                 alt=""
@@ -31,7 +39,7 @@ const File = ({ file }) => {
             />
             <div className={styles.name}>{name}</div>
             <div className={styles.date}>{date.slice(0, 10)}</div>
-            <div className={styles.size}>{size}</div>
+            <div className={styles.size}>{sizeFormat(size)}</div>
             {file.type !== "dir" && (
                 <button
                     onClick={(e) => downloadClickHandler(e)}
@@ -40,7 +48,10 @@ const File = ({ file }) => {
                     Скачать
                 </button>
             )}
-            <button className={`${styles.btn} ${styles.delete}`}>
+            <button
+                className={`${styles.btn} ${styles.delete}`}
+                onClick={(e) => deleteClickHandler(e)}
+            >
                 Удалить
             </button>
         </div>

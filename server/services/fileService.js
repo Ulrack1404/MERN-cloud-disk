@@ -1,6 +1,7 @@
 const fs = require("fs");
 const File = require("../models/File");
 const config = require("config");
+const path = require("path");
 
 class FileService {
     createDir(file) {
@@ -16,9 +17,23 @@ class FileService {
                     return reject({ message: "File already exist" });
                 }
             } catch (e) {
-                return reject;
+                return reject({ message: "File error" });
             }
         });
+    }
+
+    deleteFile(file) {
+        const path = this.getPath(file);
+        if (file.type === "dir") {
+            fs.rmdirSync(path);
+        } else {
+            console.log("path:", path);
+            fs.unlinkSync(path);
+        }
+    }
+
+    getPath(file) {
+        return `${config.get("filePath")}\\${file.user}\\${file.path}`;
     }
 }
 

@@ -1,0 +1,55 @@
+@import "../../../utils/variables.scss";
+
+.uploader {
+    height: 300px;
+    width: 300px;
+    position: fixed;
+    background-color: $font-color;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    border-radius: 12px;
+    overflow-y: auto;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+.header_title {
+    color: $background-color;
+    font-size: 1.2rem;
+}
+
+.uploader_close {
+    padding: 3px;
+}
+
+.uploadFile {
+    background-color: $background-color;
+    border-radius: 8px;
+    margin: 5px 0;
+    padding: 5px 10px;
+}
+.uploadFile_header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.uploadFile_progressBar {
+    height: 1rem;
+    border-radius: 8px;
+    background-color: $font-color;
+    display: flex;
+    margin: 3px 0;
+}
+
+.uploadFile_progressBar_bar {
+    background-color: rgb(71, 220, 160);
+    width: 0%;
+    border-radius: 8px;
+}
+.uploadFile_progressBar_percent {
+    color: $background-color;
+    left: 50%;
+    position: absolute;
+}

@@ -1,11 +1,15 @@
-import React from "react";
+import React, { createRef } from "react";
 import { useSelector } from "react-redux";
 import File from "./file/file";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import styles from "./fileList.module.scss";
 
 const FileList = () => {
-    const files = useSelector((state) => state.files.files);
+    let files = useSelector((state) => state.files.files).map((i) => ({
+        ...i,
+        nodeRef: createRef(null)
+    }));
 
     return (
         <div className={styles.fileList}>
@@ -14,9 +18,19 @@ const FileList = () => {
                 <div className={styles.date}>Дата</div>
                 <div className={styles.size}>Размер</div>
             </div>
-            {files.map((file) => (
-                <File key={file._id} file={file} />
-            ))}
+            <TransitionGroup>
+                {files.map((file) => (
+                    <CSSTransition
+                        key={file._id}
+                        timeout={900}
+                        classNames="file"
+                        exit={false}
+                        nodeRef={file.nodeRef}
+                    >
+                        <File file={file} />
+                    </CSSTransition>
+                ))}
+            </TransitionGroup>
         </div>
     );
 };

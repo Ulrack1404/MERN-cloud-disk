@@ -1,4 +1,3 @@
-const FileService = require("../services/fileService");
 const User = require("../models/User");
 const File = require("../models/File");
 const config = require("config");
@@ -30,10 +29,38 @@ class fileController {
 
     async getFiles(req, res) {
         try {
-            const files = await File.find({
+            const { sort } = req.query;
+            let files = await File.find({
                 user: req.user.id,
                 parent: req.query.parent
             });
+            switch (sort) {
+                case "name":
+                    files = await File.find({
+                        user: req.user.id,
+                        parent: req.query.parent
+                    }).sort({ name: 1 });
+                    break;
+                case "type":
+                    files = await File.find({
+                        user: req.user.id,
+                        parent: req.query.parent
+                    }).sort({ type: 1 });
+                    break;
+                case "date":
+                    files = await File.find({
+                        user: req.user.id,
+                        parent: req.query.parent
+                    }).sort({ date: 1 });
+                    break;
+                default:
+                    files = await File.find({
+                        user: req.user.id,
+                        parent: req.query.parent
+                    });
+                    break;
+            }
+
             return res.json(files);
         } catch (e) {
             console.log(e);
@@ -111,17 +138,21 @@ class fileController {
         }
     }
 
-    async deleteFile(req, res){
+    async deleteFile(req, res) {
         try {
             const file = await File.findOne({
                 _id: req.query.id,
-                user: req.user.id,
+                user: req.user.id
             });
             if (!file) {
-                return res.status(400).json({message: "file not found"})
+                return res.status(400).json({ message: "file not found" });
             }
+            fileService.deleteFile(file);
+            await file.deleteOne();
+            return res.json({ message: "File was deleted" });
         } catch (e) {
             console.log(e);
+            return res.status(400).json({ message: "Dir is not empty" });
         }
     }
 }

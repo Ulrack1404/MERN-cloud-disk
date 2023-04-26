@@ -1,19 +1,30 @@
 import axios from "axios";
-import { addFile, setFiles } from "../reducers/fileReducer";
+import { addFile, deleteFileAction, setFiles } from "../reducers/fileReducer";
+import {
+    addUploadFile,
+    changeUploadFile,
+    showUploader
+} from "../reducers/uploadReducer";
 
-export function getFiles(dirId) {
+export function getFiles(dirId, sort) {
     return async (dispatch) => {
         try {
-            const response = await axios.get(
-                `http://localhost:5000/api/files${
-                    dirId ? "?parent=" + dirId : ""
-                }`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
-                    }
+            let url = `http://localhost:5000/api/files`;
+            if (dirId) {
+                url = `http://localhost:5000/api/files?parent=${dirId}`;
+            }
+            if (sort) {
+                url = `http://localhost:5000/api/files?sort=${sort}`;
+            }
+            if (dirId && sort) {
+                url = `http://localhost:5000/api/files?parent=${dirId}&sort=${sort}`;
+            }
+
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
-            );
+            });
             dispatch(setFiles(response.data));
             // console.log("response.data:", response.data);
         } catch (e) {
@@ -38,7 +49,6 @@ export function createDir(dirId, name) {
                 }
             );
             dispatch(addFile(response.data));
-            // console.log("response.data:", response.data);
         } catch (e) {
             alert(e.response.data.message);
         }
@@ -52,7 +62,13 @@ export function uploadFile(file, dirId) {
             if (dirId) {
                 formData.append("parent", dirId);
             }
-
+            const uploadFile = {
+                name: file.name,
+                progress: 0,
+                id: Date.now()
+            };
+            dispatch(showUploader());
+            dispatch(addUploadFile(uploadFile));
             const response = await axios.post(
                 "http://localhost:5000/api/files/upload",
                 formData,
@@ -73,16 +89,15 @@ export function uploadFile(file, dirId) {
 
                         console.log("total", totalLength);
                         if (totalLength) {
-                            let progress = Math.round(
+                            uploadFile.progress = Math.round(
                                 (progressEvent.loaded * 100) / totalLength
                             );
-                            console.log("progress:", progress);
+                            dispatch(changeUploadFile(uploadFile));
                         }
                     }
                 }
             );
             dispatch(addFile(response.data));
-            // console.log("response.data:", response.data);
         } catch (e) {
             alert(e.response.data.message);
         }
@@ -109,4 +124,23 @@ export async function downloadFile(file) {
         link.remove();
     }
     return response.status(400).json({ message: "Err do it!" });
+}
+
+export function deleteFile(file) {
+    return async (dispatch) => {
+        try {
+            const response = await axios.delete(
+                `http://localhost:5000/api/files?id=${file._id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                }
+            );
+            dispatch(deleteFileAction(file._id));
+            alert(response.data.message);
+        } catch (e) {
+            alert(e.response.data.message);
+        }
+    };
 }
