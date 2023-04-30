@@ -10,9 +10,9 @@ export const registration = async (email, password) => {
                 password
             }
         );
-        alert(response.data.message);
+        console.log(response.data.message);
     } catch (error) {
-        alert(error.response.data.error.message);
+        console.log(error.response.data.error.message);
     }
 };
 

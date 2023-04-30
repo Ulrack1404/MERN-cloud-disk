@@ -30,7 +30,7 @@ export function getFiles(dirId, sort) {
             dispatch(setFiles(response.data));
             // console.log("response.data:", response.data);
         } catch (e) {
-            alert(e.response.data.message);
+            console.log(e.response.data.message);
         } finally {
             dispatch(hideLoader());
         }
@@ -54,7 +54,7 @@ export function createDir(dirId, name) {
             );
             dispatch(addFile(response.data));
         } catch (e) {
-            alert(e.response.data.message);
+            console.log(e.response.data.message);
         }
     };
 }
@@ -103,7 +103,7 @@ export function uploadFile(file, dirId) {
             );
             dispatch(addFile(response.data));
         } catch (e) {
-            alert(e.response.data.message);
+            console.log(e.response.data.message);
         }
     };
 }
@@ -142,9 +142,9 @@ export function deleteFile(file) {
                 }
             );
             dispatch(deleteFileAction(file._id));
-            alert(response.data.message);
+            console.log(response.data.message);
         } catch (e) {
-            alert(e.response.data.message);
+            console.log(e.response.data.message);
         }
     };
 }
@@ -162,7 +162,7 @@ export function searchFiles(search) {
             );
             dispatch(setFiles(response.data));
         } catch (e) {
-            alert(e.response.data.message);
+            console.log(e.response.data.message);
         } finally {
             dispatch(hideLoader());
         }
