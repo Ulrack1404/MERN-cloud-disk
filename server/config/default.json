@@ -2,6 +2,7 @@
     "serverPort": 5000,
     "mongoUri": "mongodb://ugehngo4i0lv8m3zqwx1:YN33aIVSfqE1D0h8puZN@n1-c2-mongodb-clevercloud-customers.services.clever-cloud.com:27017,n2-c2-mongodb-clevercloud-customers.services.clever-cloud.com:27017/bvrcxklt8cjnwnx?replicaSet=rs0",
     "secretKey": "mern-secret-key",
-    "filePath": "D:\\Frontend Developer\\MERN-cloud-disk\\server\\files"
+    "filePath": "D:\\Frontend Developer\\MERN-cloud-disk\\server\\files",
+    "staticPath": "D:\\Frontend Developer\\MERN-cloud-disk\\server\\static"
 
 }

@@ -22,7 +22,11 @@
         // margin-left: auto;
     }
     &_exit {
-        margin-left: auto;
+        margin: 0 10px 0 auto;
+    }
+    &_search {
+        width: 200px;
+        margin-left: 50px;
     }
 }
 

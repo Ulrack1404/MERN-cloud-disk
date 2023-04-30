@@ -47,3 +47,24 @@
     grid-column-start: 6;
     display: block;
 }
+
+.plate{
+    &_file{
+        width: 150px;
+        height: 150px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    &_img{
+        width: 100px;
+        height: 100px;
+    }
+    &_btns{
+        display: none;
+    }
+    &_file:hover &_btns{
+        display: flex;
+    }
+}

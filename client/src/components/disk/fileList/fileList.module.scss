@@ -16,27 +16,20 @@
     grid-column-start: 6;
     justify-self: center;
 }
-.ff{
+.ff {
     background-color: teal;
 }
-// //////////////////////////////////
 
-// ////////////-------------//////////////////
+.noFiles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh - 100px);
+}
 
-// .file-enter {
-//     opacity: 0;
-//     transform: scale(0.9);
-//   }
-//   .file-enter-active {
-//     opacity: 1;
-//     transform: translateX(0);
-//     transition: opacity 300ms, transform 300ms;
-//   }
-//   .file-exit {
-//     opacity: 1;
-//   }
-//   .file-exit-active {
-//     opacity: 0;
-//     transform: scale(0.9);
-//     transition: opacity 300ms, transform 300ms;
-//   }
+.filePlate{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
